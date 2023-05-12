@@ -53,4 +53,7 @@ class User extends Authenticatable
     {
         return  ucfirst($this->attributes['user_role']); 
     }
+    public function userProjects() {
+        return $this->belongsToMany(Project::class, 'user_project', 'project_id', 'user_id');
+    }
 }

@@ -18,7 +18,14 @@
                                 <input id="hours" type="text" class="form-control" name="hours">
                             </div>
                         </div>
-
+                        @cannot('isUser')
+                        <div class="row mb-3">
+                            <label for="deadline_hours" class="col-md-4 col-form-label text-md-end">{{ __('Hour') }}</label>
+                            <div class="col-md-6">
+                                <input id="deadline_hours" type="text" class="form-control" name="deadline_hours">
+                            </div>
+                        </div>
+                        @endcannot
                         <div class="row mb-3">
                             <label for="comment" class="col-md-4 col-form-label text-md-end">{{ __('Comment') }}</label>
                             <div class="col-md-6">

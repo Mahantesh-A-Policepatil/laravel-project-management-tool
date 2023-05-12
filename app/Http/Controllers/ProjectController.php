@@ -7,6 +7,7 @@ use Datatables;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -40,6 +41,29 @@ class ProjectController extends Controller
         return view('projects.index');
     }
 
+    public function assigned_projects()
+    {
+        $user = Auth::user();
+        if($user['user_role'] == "User")
+        {
+            $projects = Project::where('created_by',$user->id)->with('projectUsers')->get();
+        }else{
+            $projects = Project::with('projectUsers')->get();
+        }
+        
+        $results= [];
+        foreach ($projects as $target) {
+            $results[$target->id] = [
+                "id" => $target->id,
+                "name" => $target->name,
+            ];
+            foreach($target->projectUsers as $users){
+                $results[$target->id]["users"][] = [ "id"=> $users->id, "name"=>$users->name];
+            }
+        }
+        return view('assignedprojects.index', compact('results'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -47,6 +71,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        if(Gate::allows('isUser')) {
+            abort(403);
+        }
         $users = User::get();
         return view('projects.create', compact('users'));
     }
@@ -80,6 +107,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        if(Gate::allows('isUser')) {
+            abort(403);
+        }
         $request->validate([
             'name'=>'required',
             'description'=>'string',
@@ -91,6 +121,7 @@ class ProjectController extends Controller
             'description' => $request['description'],
             'created_by' => $request['created_by'],
         ]);
+        
         return redirect('/projectList')->with('success', 'Project has been created successfully!');
     }
 
@@ -113,6 +144,9 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
+        if(Gate::allows('isUser')) {
+            abort(403);
+        }
         $project = Project::find($id);
         $users = User::select('id', 'name')->get();
         return view('projects.edit', compact('project', 'users'));
@@ -127,6 +161,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Gate::allows('isUser')) {
+            abort(403);
+        }
         $request->validate([
             'name'=>'required',
             'description'=>'string',
@@ -156,6 +193,9 @@ class ProjectController extends Controller
 
     public function delete(Request $request)
     {
+        if(Gate::allows('isUser')) {
+            abort(403, "You are not authorized to delete");
+        }
         $project = Project::find($request->project_id);
         $project->delete();
         

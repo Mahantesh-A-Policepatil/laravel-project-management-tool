@@ -23,7 +23,8 @@
         <tr>
           <th>SL.No</th>
           <th>Task Name</th>
-          <th>Hours</th>
+          <th>Hours Logged</th>
+          <th>Deadline Hours</th>
           <th>Comments</th>
           <th>Actions</th>
         </tr>
@@ -34,6 +35,7 @@
             <td>{{$loop->index+1}}</td>
             <td>{{$row['task_name']}}</td>
             <td>{{$row['hours']}}</td>
+            <td>{{$row['deadline_hours']}}</td>
             <td>{{$row['comment']}}</td>
             <td>
               <div>

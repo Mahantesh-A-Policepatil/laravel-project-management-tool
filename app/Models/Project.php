@@ -37,4 +37,8 @@ class Project extends Model
     {
         return  ucfirst($this->attributes['name']); 
     }
+
+    public function projectUsers() {
+        return $this->belongsToMany(User::class, 'user_project', 'project_id', 'user_id');
+    }
 }

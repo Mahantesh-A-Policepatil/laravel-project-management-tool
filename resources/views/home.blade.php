@@ -5,6 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <?php
+                    $user = Auth::user();
+                ?>
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
@@ -14,16 +17,18 @@
                         </div>
                     @endif
 
-                    <ul>                          
+                    <ul>
+                        @can('isAdmin')                                  
                         <li>
                             <a href="{{ route('usersList') }}" >Users List</a> 
                         </li>
+                        @endcan
                         <li>
                             <a href="{{ route('projectList') }}" >Projects</a> 
                         </li>
-                        <li>
-                            <a href="#" >Assign Project to User</a> 
-                        </li>   
+                        <!-- <li>
+                            <a href="{{ route('projectUserList') }}" >Assign Project to User</a> 
+                        </li>    -->
                         <li>
                             <a href="#" >Generate Graphs</a> 
                         </li>                       

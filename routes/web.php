@@ -24,12 +24,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('/users', App\Http\Controllers\UserController::class);
 Route::resource('/projects', App\Http\Controllers\ProjectController::class);
 Route::get('/show_data', [App\Http\Controllers\UserController::class, 'index_new'])->name('show_data');
-Route::get('usersList', [App\Http\Controllers\UserController::class, 'show_data'])->name('usersList');
+Route::get('usersList', [App\Http\Controllers\UserController::class, 'show_data'])->name('usersList')->middleware('can:isAdmin');
 Route::post('deleteUser', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
 
 Route::get('/show_project_data', [App\Http\Controllers\ProjectController::class, 'index'])->name('show_project_data');
 Route::get('projectList', [App\Http\Controllers\ProjectController::class, 'showProjecList'])->name('projectList');
 Route::post('deleteProject', [App\Http\Controllers\ProjectController::class, 'delete'])->name('deleteProject');
+
+//assignedUsersList
+//showProjecUserList
+Route::get('projectUserList', [App\Http\Controllers\ProjectController::class, 'assigned_projects'])->name('projectUserList');
+Route::get('assignedUsersList', [App\Http\Controllers\ProjectController::class, 'getAssignedUsersList'])->name('assignedUsersList');
+
 //taskList
 Route::get('taskList/{project_id}', [App\Http\Controllers\TaskController::class, 'index'])->name("projectTaskList");
 Route::resource('/tasks', App\Http\Controllers\TaskController::class);
@@ -41,3 +47,4 @@ Route::get('activities/create/{task_id}', [App\Http\Controllers\ActivityControll
 Route::resource('/activities', App\Http\Controllers\ActivityController::class);
 Route::get('activityEdit/{activity_id}', [App\Http\Controllers\ActivityController::class, 'edit'])->name('activityEdit');
 Route::post('deleteActivity/{activity_id}', [App\Http\Controllers\ActivityController::class, 'delete'])->name('deleteActivity');
+Route::get('chart/{project_id}', [App\Http\Controllers\ActivityController::class, 'index_chart']);

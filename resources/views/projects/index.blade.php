@@ -20,13 +20,15 @@
           </div>
         @endif
       </div>
-      <div alin="right" style="margin-top:5px;">  <a href="{{ route('projects.create')}}" class="btn btn-primary">Create New Project</a> </div>
+      @cannot('isUser')
+        <div alin="right" style="margin-top:5px;">  <a href="{{ route('projects.create')}}" class="btn btn-primary">Create New Project</a> </div>
+      @endcannot
       <div style="margin-top:10px;">
       <table class="table table-busered" id="yajra_project_table">
          <thead>
             <tr>
                 <td>Project Name</td>
-                <td>Description</td>
+                <!-- <td>Description</td> -->
                 <td>Created By</td>
                 <td>Actions</td>
             </tr>
@@ -43,15 +45,17 @@
            ajax: '{{ url('show_project_data') }}',
            columns: [
                 { data: 'name', name: 'name' },
-                { data: 'description', name: 'description' },                    
+                // { data: 'description', name: 'description' },                    
                 { data: 'created_by', name: 'created_by' },
                 { data: 'id', name: 'id', userable: false,
                     render: function( data, type, full, meta ) {
                       var getEditUrl = "http://"+window.location.host+"/projects/"+data+"/edit";
                       var getTasksUrl = "http://"+window.location.host+"/taskList/"+data;
+                      var getChartUrl = "http://"+window.location.host+"/chart/"+data;
                       $action_buttons =  "<div><div style='float:left;'><a href='"+getTasksUrl+"' class='btn btn-info '>Show Tasks</a></div>";
-                      $action_buttons +=  "<div style='float:left; margin-left:5px;'><a href='"+getEditUrl+"' class='btn btn-success '>Edit</a></div>";
-                      $action_buttons += "<div style='float:left; margin-left:5px;'><button class='btn btn-danger delete-project' data-project-id='"+data+"'>Delete</button></div></div>";
+                      $action_buttons +=  "<div><div style='float:left;margin-left:2px;'><a href='"+getChartUrl+"' class='btn btn-warning'>Show Chart</a></div>";
+                      $action_buttons +=  "<div style='float:left; margin-left:2px;'><a href='"+getEditUrl+"' class='btn btn-success'>Edit</a></div>";
+                      $action_buttons += "<div style='float:left; margin-left:2px;'><button class='btn btn-danger delete-project' data-project-id='"+data+"'>Delete</button></div></div>";
                       return $action_buttons;
                     }
                 }

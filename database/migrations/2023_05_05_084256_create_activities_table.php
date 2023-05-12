@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->integer('hours')->unsigned()->nullable();
+            $table->integer('deadline_hours')->unsigned()->nullable();
             $table->string('comment');
             $table->unsignedBigInteger('task_id')->nullable();
             $table->unsignedBigInteger('project_id')->nullable();
