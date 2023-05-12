@@ -13,14 +13,14 @@
                         @csrf
                         <input id="task_id" name="task_id" type="hidden" class="form-control" value="{{ $taskId }}" >
                         <div class="row mb-3">
-                            <label for="hours" class="col-md-4 col-form-label text-md-end">{{ __('Hour') }}</label>
+                            <label for="hours" class="col-md-4 col-form-label text-md-end">{{ __('Hours') }}</label>
                             <div class="col-md-6">
                                 <input id="hours" type="text" class="form-control" name="hours">
                             </div>
                         </div>
                         @cannot('isUser')
                         <div class="row mb-3">
-                            <label for="deadline_hours" class="col-md-4 col-form-label text-md-end">{{ __('Hour') }}</label>
+                            <label for="deadline_hours" class="col-md-4 col-form-label text-md-end">{{ __('Deadline Hours') }}</label>
                             <div class="col-md-6">
                                 <input id="deadline_hours" type="text" class="form-control" name="deadline_hours">
                             </div>

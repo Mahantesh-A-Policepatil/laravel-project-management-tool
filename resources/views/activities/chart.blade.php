@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +9,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
   <body>
-    <h2 style="text-align: center;">Laravel Google Bar Charts Example Tutorial - Nicesnippets.com</h2>
+  <!-- <div class="row mb-3">
+      <label for="created_by" class="col-md-4 col-form-label text-md-end">{{ __('Developer') }}</label>
+      <div class="col-md-6">
+          <select class="form-control select2" name='created_by' id='created_by'>
+              <option value=""></option>
+              @foreach($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+              @endforeach 
+          </select>
+      </div>
+  </div> -->
+    <h2 style="text-align: center;">Laravel Google Bar Charts</h2>
     <div class="container-fluid p-5">
     <div id="barchart_material" style="width: 100%; height: 500px;"></div>
     </div>
@@ -28,7 +41,7 @@
 
             @php
               foreach($taksChartData as $data) {
-                  echo "[".$data['task_id'].", '".$data['assigned_user']."', ".$data['hours'].", ".$data['deadline_hours']."],";
+                  echo "[".$data['task_id'].", '".$data['task_name']."', ".$data['hours'].", ".$data['deadline_hours']."],";
               }
             @endphp
         ]);
@@ -47,3 +60,4 @@
 
 </body>
 </html>
+@endsection

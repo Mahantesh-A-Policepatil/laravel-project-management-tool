@@ -12,7 +12,7 @@
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Project Name') }}</label>
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name">
+                                <input id="name" type="text" class="form-control" name="name">
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function() { 
-		jQuery('#updateProjectForm').validate({
+		jQuery('#createProjectForm').validate({
 		    rules: {
                 name: {
                     required: true,

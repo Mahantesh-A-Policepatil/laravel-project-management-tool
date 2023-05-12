@@ -77,28 +77,7 @@ class ProjectController extends Controller
         $users = User::get();
         return view('projects.create', compact('users'));
     }
-    //assign
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function assign(Request $request)
-    {
-        $request->validate([
-            'user_id'=>'required',
-            'project_id'=>'string',
-        ]);
-
-        $project = Project::find($request->project_id);
-        // Project::create([
-        //     'name' => $request['name'],
-        //     'description' => $request['description'],
-        //     'created_by' => $request['created_by'],
-        // ]);
-        return redirect('/projectList')->with('success', 'Project has been created successfully!');
-    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -178,17 +157,6 @@ class ProjectController extends Controller
            
         $project->update();
         return redirect('/projectList')->with('success', 'Project has been updated successfully!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function delete(Request $request)

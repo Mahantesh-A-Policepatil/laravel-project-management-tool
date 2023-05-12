@@ -9,9 +9,8 @@ use App\Models\User;
 use App\Models\Activity;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
-
-// ...
 
 class ActivityController extends Controller
 {
@@ -42,7 +41,10 @@ class ActivityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index_chart($projectId)
-    {                  
+    {   
+        if(Gate::allows('isUser')) {
+            abort(403, "You are not authorized to view chart");
+        }               
         $taksChartData = Activity::
             select(
                 'users.name as assigned_user',
@@ -56,11 +58,10 @@ class ActivityController extends Controller
              ->where('activities.project_id',$projectId)
              ->groupBy("activities.task_id")
              ->get();    
-        // echo "<pre>";
-        // print_r($taksChartData); exit;         
         $project =  Activity::where('activities.project_id',$projectId)->first();  
-        $projectName = $project->project->name;     
-        return view('activities.chart', compact('taksChartData', 'projectName'));         
+        $projectName = $project->project->name;  
+        $users = User::select('id', 'name')->get();   
+        return view('activities.chart', compact('taksChartData', 'projectName','users'));         
     }
 
     /**

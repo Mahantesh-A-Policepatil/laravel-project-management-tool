@@ -26,14 +26,7 @@
                         <li>
                             <a href="{{ route('projectList') }}" >Projects</a> 
                         </li>
-                        <!-- <li>
-                            <a href="{{ route('projectUserList') }}" >Assign Project to User</a> 
-                        </li>    -->
-                        <li>
-                            <a href="#" >Generate Graphs</a> 
-                        </li>                       
                     </ul> 
-
                 </div>
             </div>
         </div>
