@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::get('/ganttdata', 'GanttController@get');
+// Route::resource('task', 'TaskController');
+// Route::resource('link', 'LinkController');
+
+Route::get('/ganttdata', [App\Http\Controllers\GanttController::class, 'get']);
+Route::resource('task', App\Http\Controllers\GanttController::class);
+//Route::resource('link', App\Http\Controllers\LinkController::class);

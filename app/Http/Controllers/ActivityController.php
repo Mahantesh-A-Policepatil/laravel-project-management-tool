@@ -65,6 +65,38 @@ class ActivityController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function project_chart($projectId)
+    {   
+        if(Gate::allows('isUser')) {
+            abort(403, "You are not authorized to view chart");
+        }               
+        $taksChartData = Activity::
+            select(
+                'users.name as assigned_user',
+                'activities.project_id',
+                'activities.task_id',
+                'tasks.name as task_name',
+                 DB::raw('SUM(activities.hours) as hours') ,
+                'activities.deadline_hours'
+            )->join('tasks', 'activities.task_id', '=', 'tasks.id')
+             ->join('users', 'tasks.assignee', '=', 'users.id')
+             ->where('activities.project_id',$projectId)
+             //->groupBy("activities.task_id")
+             ->get();    
+        $project =  Activity::where('activities.project_id',$projectId)->first();  
+        $projectName = $project->project->name;  
+        $users = User::select('id', 'name')->get(); 
+        // echo "<pre>";  
+        // print_r($taksChartData); 
+        // exit;
+        return view('activities.customchart', compact('taksChartData', 'projectName','users'));         
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

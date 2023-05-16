@@ -48,3 +48,12 @@ Route::resource('/activities', App\Http\Controllers\ActivityController::class);
 Route::get('activityEdit/{activity_id}', [App\Http\Controllers\ActivityController::class, 'edit'])->name('activityEdit');
 Route::post('deleteActivity/{activity_id}', [App\Http\Controllers\ActivityController::class, 'delete'])->name('deleteActivity');
 Route::get('chart/{project_id}', [App\Http\Controllers\ActivityController::class, 'index_chart']);
+
+Route::get('projectchart/{project_id}', [App\Http\Controllers\ActivityController::class, 'project_chart']);
+
+Route::get('/gantt', function () {	
+    return view('activities.customchart');
+});
+Route::get('projectchart/{project_id}', [App\Http\Controllers\ActivityController::class, 'project_chart']);
+Route::get('/data', [App\Http\Controllers\ActivityController::class, 'get']);
+Route::resource('project_task', App\Http\Controllers\TaskController::class);
